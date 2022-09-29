@@ -1,7 +1,7 @@
 use fake::locales::{EN, FR_FR, ZH_CN, ZH_TW};
 use fake::Fake;
 
-fn lorem_faker() {
+pub fn lorem_faker() {
     use fake::faker::lorem::raw::*;
 
     let val: String = Word(EN).fake();
@@ -23,7 +23,7 @@ fn lorem_faker() {
     println!("{:?}", val);
 }
 
-fn name_faker() {
+pub fn name_faker() {
     use fake::faker::name::raw::*;
 
     let val: String = FirstName(EN).fake();
@@ -57,7 +57,7 @@ fn name_faker() {
     println!("{:?}", val);
 }
 
-fn job_faker() {
+pub fn job_faker() {
     use fake::faker::job::raw::*;
     let val: String = Seniority(EN).fake();
     println!("{:?}", val);
@@ -75,7 +75,7 @@ fn job_faker() {
     println!("{:?}", val);
 }
 
-fn address_faker() {
+pub fn address_faker() {
     use fake::faker::address::raw::*;
 
     let val: String = CityPrefix(EN).fake();
@@ -139,14 +139,14 @@ fn address_faker() {
     println!("{:?}", val);
 }
 
-fn automotive_faker() {
+pub fn automotive_faker() {
     use fake::faker::automotive::raw::*;
 
     let val: String = LicencePlate(FR_FR).fake();
     println!("{:?}", val);
 }
 
-fn bool_faker() {
+pub fn bool_faker() {
     use fake::faker::boolean::raw::*;
 
     use fake::faker::boolean::en;
@@ -178,7 +178,7 @@ fn bool_faker() {
     }
 }
 
-fn company_faker() {
+pub fn company_faker() {
     use fake::faker::company::raw::*;
 
     let val: String = CompanySuffix(EN).fake();
@@ -218,7 +218,7 @@ fn company_faker() {
     println!("{:?}", val);
 }
 
-fn internet_faker() {
+pub fn internet_faker() {
     use fake::faker::internet::raw::*;
 
     let val: String = FreeEmailProvider(EN).fake();
@@ -255,7 +255,7 @@ fn internet_faker() {
     println!("{:?}", val);
 }
 
-fn number_faker() {
+pub fn number_faker() {
     use fake::faker::number::raw::*;
 
     let val: String = Digit(EN).fake();
@@ -269,7 +269,7 @@ fn number_faker() {
     println!("{:?}", val);
 }
 
-fn phone_number_faker() {
+pub fn phone_number_faker() {
     use fake::faker::number::raw::NumberWithFormat;
     use fake::faker::phone_number::raw::*;
 
@@ -285,7 +285,7 @@ fn phone_number_faker() {
 }
 
 #[cfg(feature = "http")]
-fn http_faker() {
+pub fn http_faker() {
     use fake::faker::http::raw::*;
     use fake::Faker;
     use http::status::{InvalidStatusCode, StatusCode};
@@ -318,7 +318,7 @@ fn http_faker() {
 }
 
 #[cfg(feature = "chrono")]
-fn chrono_faker() {
+pub fn chrono_faker() {
     use chrono::Utc;
     use fake::faker::chrono::raw::*;
     use fake::Faker;
@@ -360,7 +360,7 @@ fn chrono_faker() {
     println!("{}", between);
 }
 
-fn filesystem_faker() {
+pub fn filesystem_faker() {
     use fake::faker::filesystem::raw::*;
     use std::path::PathBuf;
 
@@ -383,7 +383,7 @@ fn filesystem_faker() {
     println!("{:?}", val);
 }
 
-fn currency_faker() {
+pub fn currency_faker() {
     use fake::faker::currency::raw::*;
 
     let val: String = CurrencyCode(EN).fake();
@@ -397,7 +397,7 @@ fn currency_faker() {
 }
 
 #[cfg(feature = "random_color")]
-fn color_faker() {
+pub fn color_faker() {
     use fake::faker::color::raw::*;
 
     let val: String = HexColor(EN).fake();
@@ -419,14 +419,14 @@ fn color_faker() {
     println!("{:?}", val);
 }
 
-fn creditcard_faker() {
+pub fn creditcard_faker() {
     use fake::faker::creditcard::raw::*;
 
     let val: String = CreditCardNumber(EN).fake();
     println!("{:?}", val);
 }
 
-fn barcode_faker() {
+pub fn barcode_faker() {
     use fake::faker::barcode::raw::*;
 
     let val: String = Isbn13(EN).fake();
@@ -440,7 +440,7 @@ fn barcode_faker() {
 }
 
 #[cfg(feature = "uuid")]
-fn uuid_faker() {
+pub fn uuid_faker() {
     use fake::uuid::*;
     use uuid::Uuid;
 
@@ -458,7 +458,7 @@ fn uuid_faker() {
 }
 
 #[cfg(feature = "rust_decimal")]
-fn decimal_faker() {
+pub fn decimal_faker() {
     use fake::decimal::*;
     use fake::Faker;
     use rust_decimal as rd;
@@ -480,7 +480,7 @@ fn decimal_faker() {
 }
 
 #[cfg(feature = "bigdecimal")]
-fn bigdecimal_faker() {
+pub fn bigdecimal_faker() {
     use bigdecimal_rs as bd;
     use fake::bigdecimal::*;
     use fake::Faker;
@@ -501,7 +501,27 @@ fn bigdecimal_faker() {
     println!("{:?}", val);
 }
 
+pub fn many_phones() {
+    use fake::faker::phone_number::raw::*;
+
+    for _ in 0..999 {
+        let val: String = CellNumber(EN).fake();
+        println!("{:?}", val);
+    }
+}
+pub fn many_names() {
+    use fake::faker::name::raw::*;
+
+    for _ in 0..99 {
+        let val: String = Name(EN).fake();
+        println!("{:?}", val);
+    }
+}
+
 fn main() {
+    many_phones();
+
+    /*
     lorem_faker();
     name_faker();
     job_faker();
@@ -516,6 +536,7 @@ fn main() {
     currency_faker();
     creditcard_faker();
     barcode_faker();
+ */
 
     #[cfg(feature = "random_color")]
     color_faker();
@@ -531,7 +552,6 @@ fn main() {
 
     #[cfg(feature = "rust_decimal")]
     decimal_faker();
-
     #[cfg(feature = "bigdecimal")]
     bigdecimal_faker();
 }
